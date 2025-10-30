@@ -25,8 +25,8 @@ You can find the code for the [completed custom block](https://github.com/google
 - A browser.
 - A text editor.
 - Basic knowledge of JavaScript.
-- Basic understanding of the [Blockly toolbox](https://developers.google.com/blockly/guides/configure/web/toolbox).
-- Basic understanding of [using JSON to define custom blocks](https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks).
+- Basic understanding of the [Blockly toolbox](https://developers.google.com/blockly/guides/configure/web/toolboxes/toolbox).
+- Basic understanding of [using JSON to define custom blocks](https://developers.google.com/blockly/guides/create-custom-blocks/define/structure-json).
 
 ## Setup
 
@@ -239,7 +239,7 @@ Depending on the severity of the issue, this might be sufficient for your custom
 
 ![A Blockly workspace with disabled break and continue blocks.](disabled_break.png)
 
-You can disable a block using `this.setEnabled(false)`, although there are some caveats: disabled blocks can't be dragged out of the toolbox flyout, and the act of disabling a block usually adds an event to Blockly's undo history. That's probably not the behavior you want when validating a block, so you can avoid both of these effects with the following code, which you should put inside the change listener function after setting the warning text:
+You can disable a block using `this.setDisabledReason(true, 'reason')`, although there are some caveats: disabled blocks can't be dragged out of the toolbox flyout, and the act of disabling a block usually adds an event to Blockly's undo history. That's probably not the behavior you want when validating a block, so you can avoid both of these effects with the following code, which you should put inside the change listener function after setting the warning text:
 
 ```js
     // Disable invalid blocks (unless it's in a toolbox flyout,
@@ -248,7 +248,7 @@ You can disable a block using `this.setEnabled(false)`, although there are some 
       const initialGroup = Blockly.Events.getGroup();
       // Make it so the move and the disable event get undone together.
       Blockly.Events.setGroup(event.group);
-      this.setEnabled(valid);
+      this.setDisabledReason(!valid, 'Invalid range');
       Blockly.Events.setGroup(initialGroup);
     }
 ```
@@ -270,10 +270,10 @@ You can find the code for the [completed custom block](https://github.com/google
 
 ### Resources
 For more information related topics, check out the documentation:
-* [Defining the toolbox](https://developers.google.com/blockly/guides/configure/web/toolbox)
-* [Defining custom blocks](https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks)
-* [Generating code from blocks](https://developers.google.com/blockly/guides/create-custom-blocks/generating-code)
-* [Creating extensions](https://developers.google.com/blockly/guides/create-custom-blocks/extensions)
+* [Defining the toolbox](https://developers.google.com/blockly/guides/configure/web/toolboxes/toolbox)
+* [Defining custom blocks](https://developers.google.com/blockly/guides/create-custom-blocks/overview)
+* [Generating code from blocks](https://developers.googlehttps.com/blockly/guides/create-custom-blocks/code-generation/overview)
+* [Creating extensions](https://developers.google.com/blockly/guides/create-custom-blocks/define/extensions#extensions)
 * [Listening for change events](https://developers.google.com/blockly/guides/configure/web/events)
 * [Custom validators](https://developers.google.com/blockly/guides/create-custom-blocks/fields/validators)
-* [Custom block style guide](https://developers.google.com/blockly/guides/create-custom-blocks/style-guide)
+* [Custom block style guide](https://developers.google.com/blockly/guides/design/blocks)
